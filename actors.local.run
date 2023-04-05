@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --account=uot185
+#SBATCH --job-name="Actor Director""
+#SBATCH --output="actor.local.out"
+#SBATCH --partition=shared
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=5G
+#SBATCH --export=ALL
+#SBATCH --time=10
+
+module load openjdk
+SW=/expanse/lustre/projects/uot182/fegaras
+export HADOOP_HOME=$SW/hadoop-3.2.2
+PATH="$HADOOP_HOME/bin:$PATH"
+
+rm -rf output
+hadoop --config $SW/conf jar Ad.jar ActorsDirectosMR title.crew.tsv title.basics.tsv imdb00-title-actors.csv output-wc
